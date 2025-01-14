@@ -24,6 +24,8 @@ import { Label } from '@radix-ui/react-label'
 import { Input } from './ui/input'
 import { useTaskContext } from '@/contexts/taskContext'
 import Filters from './Filters'
+import { useToast } from "@/hooks/use-toast"
+import { Toaster } from "@/components/ui/toaster"
 
 const Navbar = () => {
     interface Task {
@@ -32,7 +34,7 @@ const Navbar = () => {
         taskType: string;
         category: string;
     }
-
+    const { toast } = useToast()
     const { addTask } = useTaskContext();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -46,18 +48,51 @@ const Navbar = () => {
             taskType,
             category
         };
-        if (title.length > 0 && title.length < 30 && description.length > 0 && description.length < 100 && taskType && category) {
-            addTask(newTask);
-            setTitle('');
-            setDescription('');
-            setTaskType('');
-            setCategory('');
+        if (!title) {
+            toast({
+                title: "Error",
+                description: "Title is required",
+            });
+            return;
         }
-        throw new Error("Title must be between 1 and 30 characters");
+        if (title.length >= 30) {
+            toast({
+                title: "Error",
+                description: "Title must be less than 30 characters",
+            });
+            return;
+        }
+        if (!description) {
+            toast({
+                title: "Error",
+                description: "Description is required",
+            });
+            return;
+        }
+        if (description.length >= 100) {
+            toast({
+                title: "Error",
+                description: "Description must be less than 100 characters",
+            });
+            return;
+        }
+        if (!category) {
+            toast({
+                title: "Error",
+                description: "Category is required",
+            });
+            return;
+        }
+
+        addTask(newTask);
+        setTitle('');
+        setDescription('');
+        setCategory('');
     }
 
     return (
         <div className='flex flex-col items-center justify-center gap-4 w-full'>
+            <Toaster />
             <div
                 className="flex items-center justify-between w-full">
                 <div
