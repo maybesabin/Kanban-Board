@@ -116,5 +116,5 @@ To run this project locally, follow these steps:
 
 ## Demo Video
 
-[https://drive.google.com/file/d/16QX0T6kmrrhkQ951tBZGHj3dkOC8GPmr/view](#)
+[Watch the demo video here](https://drive.google.com/file/d/16QX0T6kmrrhkQ951tBZGHj3dkOC8GPmr/view)
 
